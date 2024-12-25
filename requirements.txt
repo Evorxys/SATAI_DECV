@@ -1,2 +1,4 @@
 Flask-Session
 Flask
+psycopg2
+python-dotenv
