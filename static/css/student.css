@@ -1,0 +1,204 @@
+body {
+    background-color: darkblue; /* Dark blue background */
+    color: #f0f0f0; /* Light text color */
+    /* ...existing code... */
+}
+
+.topbar {
+    background-color: rgb(0, 0, 70);
+    color: white;
+    padding: 20px; /* Increased padding */
+    text-align: center;
+    font-size: 24px; /* Larger font size */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.user-info {
+    font-size: 18px; /* Larger font size */
+    margin-left: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.user-info button {
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    margin-left: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.user-info button:hover {
+    background-color: #cc0000;
+}
+
+.chatbox {
+    background-color: #2f35e8;
+    color: #000;
+    padding: 10px;
+    margin: 20px;
+    border-radius: 5px;
+    border: 2px solid #ffffff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+#chat-messages {
+    height: 200px;
+    overflow-y: scroll;
+    border: 1px solid #cccccc;
+    padding: 5px;
+    margin-bottom: 10px;
+    background-color: #170042;
+    color: #000;
+    border-radius: 5px;
+}
+
+#teacher-messages, #student-messages {
+    height: 150px; /* Increased height */
+    overflow-y: scroll;
+    border: 1px solid #cccccc;
+    padding: 5px;
+    margin-bottom: 10px;
+    background-color: #170042;
+    color: #000;
+    border-radius: 5px;
+    font-size: 18px; /* Larger font size */
+}
+
+.message-bubble {
+    background-color: #007bff;
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    max-width: 80%;
+    word-wrap: break-word;
+    text-align: left;
+    font-size: 18px; /* Larger font size */
+}
+
+.message-bubble.student {
+    background-color: #1c6d2f;
+    text-align: left; /* Align to the left */
+    max-width: 100%;
+    margin-right: auto;
+}
+
+.message-bubble.teacher {
+    background-color: #004ea1;
+    text-align: left;
+    max-width: 100%;
+    margin-right: auto;
+}
+
+#message-input {
+    width: calc(100% - 22px);
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #000;
+}
+
+.chat-buttons, .speak-button, .camera-button {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.chat-buttons button {
+    background-color: navy;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    margin-right: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 16px;
+}
+
+.chat-buttons button:hover {
+    background-color: #00509e;
+}
+
+.speak-button button {
+    background-color: rgb(255, 106, 0);
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 16px;
+}
+
+.speak-button button:hover {
+    background-color: #744100;
+}
+
+.camera-button button {
+    background-color: #cc9900;
+    border: none;
+    padding: 20px 40px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+}
+
+.camera-button button:hover {
+    background-color: #b38600;
+}
+
+.camera-button img {
+    width: 25px;
+    height: 25px;
+    margin-right: 10px;
+}
+
+.camera-view {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    max-width: 600px;
+    background-color: rgba(0, 0, 0, 0.8);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    flex-direction: column;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+#camera-stream {
+    width: 100%;
+    border: 2px solid #fff;
+    border-radius: 10px;
+}
+
+#close-camera-button {
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin-top: 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#close-camera-button:hover {
+    background-color: #cc0000;
+}

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/student.css') }}">
+    <!-- ...existing code... -->
+</head>
+<body>
+    <div class="topbar">
+        <div>Student Interface</div>
+        <div class="user-info">
+            Username: {{ username }} | Position: {{ position }} | Room: {{ room }}
+            <button id="logout-button">Logout</button>
+        </div>
+    </div>
+    <div class="chatbox">
+        <div id="teacher-messages" class="messages-section"></div>
+        <div id="student-messages" class="messages-section"></div>
+        <input type="text" id="message-input" placeholder="Type your message here...">
+        <div class="chat-buttons">
+            <button id="send-button">Send</button>
+            <button id="clear-button">Refresh</button>
+        </div>
+        <div class="speak-button">
+            <button id="speak-button">Speak</button>
+        </div>
+        <div class="camera-button">
+            <button id="camera-button"><img src="{{ url_for('static', filename='uploads/camera_icon.png') }}" alt="Camera"> Camera</button>
+        </div>
+    </div>
+    <div id="camera-view" class="camera-view">
+        <video id="camera-stream" autoplay></video>
+        <button id="close-camera-button">Close</button>
+    </div>
+    <!-- ...existing code... -->
+    <script>
+        const username = "{{ username }}";
+        const position = "{{ position }}";
+        const room = "{{ room }}";
+        localStorage.setItem('username', username);
+        localStorage.setItem('position', position);
+        localStorage.setItem('room', room);
+
+        document.getElementById('logout-button').addEventListener('click', function() {
+            window.location.href = "{{ url_for('index') }}";
+        });
+
+        document.getElementById('speak-button').addEventListener('click', function() {
+            const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+            recognition.lang = 'en-US';
+            recognition.interimResults = false;
+            recognition.maxAlternatives = 1;
+
+            recognition.onresult = function(event) {
+                const speechResult = event.results[0][0].transcript;
+                document.getElementById('message-input').value = speechResult;
+            };
+
+            recognition.onerror = function(event) {
+                console.error('Speech recognition error:', event.error);
+            };
+
+            recognition.start();
+        });
+    </script>
+    <script src="{{ url_for('static', filename='js/student.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/speech_to_text.js') }}"></script>
+</body>
+</html>

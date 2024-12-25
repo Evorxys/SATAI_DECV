@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/teacher.css') }}">
+    <!-- ...existing code... -->
+</head>
+<body>
+    <div class="topbar">
+        <div>Teacher Interface</div>
+        <div class="user-info">
+            Username: {{ username }} | Position: {{ position }} | Room: {{ room }}
+            <button id="logout-button">Logout</button>
+        </div>
+    </div>
+    <div class="chatbox">
+        <div id="teacher-messages" class="messages-section"></div>
+        <div id="student-messages" class="messages-section"></div>
+        <input type="text" id="message-input" placeholder="Type your message here...">
+        <div class="chat-buttons">
+            <button id="send-button">Send</button>
+            <button id="clear-button">Refresh</button>
+            <button id="save-button">Save</button>
+            <button id="print-button">Print</button>
+        </div>
+        <div class="speak-button">
+            <button id="speak-button">Speak</button>
+        </div>
+    </div>
+    <script>
+        const username = "{{ username }}";
+        const position = "{{ position }}";
+        const room = "{{ room }}";
+        localStorage.setItem('username', username);
+        localStorage.setItem('position', position);
+        localStorage.setItem('room', room);
+
+        document.getElementById('save-button').addEventListener('click', function() {
+            if (position === 'teacher' && room === localStorage.getItem('room')) {
+                // Save messages logic here
+            } else {
+                alert('Only teachers in the same room can save messages.');
+            }
+        });
+
+        document.getElementById('logout-button').addEventListener('click', function() {
+            window.location.href = "{{ url_for('index') }}";
+        });
+
+        document.getElementById('speak-button').addEventListener('click', function() {
+            const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+            recognition.lang = 'en-US';
+            recognition.interimResults = false;
+            recognition.maxAlternatives = 1;
+
+            recognition.onresult = function(event) {
+                const speechResult = event.results[0][0].transcript;
+                document.getElementById('message-input').value = speechResult;
+            };
+
+            recognition.onerror = function(event) {
+                console.error('Speech recognition error:', event.error);
+            };
+
+            recognition.start();
+
+            setInterval(function() {
+                const messageInput = document.getElementById('message-input');
+                const message = messageInput.value;
+                if (message.trim() !== '') {
+                    sendMessage(message);
+                    messageInput.value = '';
+                }
+            }, 5000);
+        });
+
+        function sendMessage(message) {
+            const room = localStorage.getItem('room');
+            fetch('/send_message', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ message: message, username: username, position: position, room: room })
+            }).then(response => response.json()).then(data => {
+                if (data.status !== 'success') {
+                    alert('Failed to send message');
+                }
+            });
+        }
+    </script>
+    <script src="{{ url_for('static', filename='js/teacher.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/speech_to_text.js') }}"></script>
+</body>
+</html>
